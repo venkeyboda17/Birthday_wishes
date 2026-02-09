@@ -12,20 +12,20 @@ body{
   margin:0;
   min-height:100vh;
   font-family:'Poppins',sans-serif;
-  text-align:center;
   color:white;
   overflow-x:hidden;
-  background:url("celebration-bg.png") no-repeat center center fixed;
-  background-size:cover;
+  background:url("celebration-bg.png") center/cover no-repeat fixed;
 }
 
+/* MAIN CARD */
 .container{
-  position:relative;
-  padding:140px 20px 40px;
-  background:rgba(0,0,0,.35);
-  margin:20px;
+  max-width:900px;
+  margin:40px auto;
+  padding:120px 20px 40px;
+  background:rgba(0,0,0,.25);
+  backdrop-filter:blur(5px);
   border-radius:25px;
-  backdrop-filter:blur(6px);
+  text-align:center;
 }
 
 h1{font-size:42px;margin-bottom:10px}
@@ -49,17 +49,6 @@ button{
   box-shadow:0 10px 25px rgba(0,0,0,.3);
 }
 
-.slideshow{
-  width:260px;
-  margin:40px auto;
-}
-.slideshow img{
-  width:100%;
-  border-radius:20px;
-  display:none;
-  box-shadow:0 15px 40px rgba(0,0,0,.4);
-}
-
 .message-box{
   max-width:760px;
   margin:35px auto;
@@ -78,6 +67,26 @@ button{
   to{transform:scale(1);opacity:1}
 }
 
+/* 🎞️ CORNER SLIDESHOWS */
+.corner-slideshow{
+  position:fixed;
+  width:180px;
+  z-index:10;
+}
+.corner-slideshow img{
+  width:100%;
+  display:none;
+  border-radius:18px;
+  box-shadow:0 15px 35px rgba(0,0,0,.45);
+}
+
+/* positions */
+.top-left{top:20px;left:20px}
+.top-right{top:20px;right:20px}
+.bottom-left{bottom:20px;left:20px}
+.bottom-right{bottom:20px;right:20px}
+
+/* effects */
 .confetti,.sparkle,.balloon,.firework{
   position:fixed;
   z-index:999;
@@ -103,43 +112,59 @@ button{
   text-decoration:none;
   font-weight:bold;
 }
+
+/* mobile */
+@media(max-width:768px){
+  .corner-slideshow{width:120px;opacity:.9}
+}
 </style>
 </head>
 
 <body>
-<!-- MUSIC (mobile autoplay safe) -->
+
 <audio id="song" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
+<!-- 🔥 PRIORITY IMAGE LIST (ORDER = PRIORITY) -->
+<div id="priority-images" style="display:none">
+  <img src="Pic01.png">
+  <img src="Pic02.png">
+  <img src="Pic03.png">
+  <img src="Pic04.png">
+  <!-- <img src="Pic05.png">
+  <img src="Pic06.png">
+  <img src="Pic07.png">
+  <img src="Pic08.png"> -->
+  <!-- add unlimited images here -->
+</div>
+
+<!-- CORNERS -->
+<div class="corner-slideshow top-left"></div>
+<div class="corner-slideshow top-right"></div>
+<div class="corner-slideshow bottom-left"></div>
+<div class="corner-slideshow bottom-right"></div>
+
 <div class="container">
+  <h1>🎂 Happy Birthday <span id="name"></span> 🎂</h1>
+  <div class="subtitle">May your life always be filled with happiness and smiles 💛</div>
 
-<h1>🎂 Happy Birthday <span id="name"></span> 🎂</h1>
-<div class="subtitle">May your life always be filled with happiness and smiles 💛</div>
+  <div class="cake" id="cake">🎂</div>
+  <button onclick="celebrate()">🕯 Blow Candle</button>
 
-<div class="cake" id="cake">🎂</div>
-<button onclick="celebrate()">🕯 Blow Candle</button>
+  <div class="message-box" id="messageBox">
+    ✨ You are truly special and bring joy to everyone around you.<br>
+    May all your dreams come true 🎉🎈🎁
+    <div class="signature">— With love, <b>Venkey 💛</b></div>
+  </div>
 
-<div class="message-box" id="messageBox">
-✨ You are truly special and bring joy to everyone around you.<br>
-May all your dreams come true 🎉🎈🎁
-<div class="signature">— With love, <b>Venkey 💛</b></div>
-</div>
-
-<div class="slideshow">
-  <img src="Pic1.png">
-  <img src="Pic2.png">
-  <img src="Pic3.png">
-  <img src="Pic4.png">
-</div>
-
-<div class="share">
-  <a id="whatsapp" target="_blank">📲 Share on WhatsApp</a>
-</div>
-
+  <div class="share">
+    <a id="whatsapp" target="_blank">📲 Share on WhatsApp</a>
+  </div>
 </div>
 
 <script>
+/* NAME */
 const params=new URLSearchParams(window.location.search);
 const name=params.get("name")||"You";
 document.getElementById("name").innerText=name;
@@ -148,17 +173,31 @@ document.getElementById("name").innerText=name;
 document.getElementById("whatsapp").href=
 `https://wa.me/?text=🎉🎂%20Happy%20Birthday%20${encodeURIComponent(name)}%20🎉🎂%0AFrom%20Venkey%20💛`;
 
-/* SLIDESHOW */
-let i=0;
-const imgs=document.querySelectorAll(".slideshow img");
-function show(){
-  imgs.forEach(img=>img.style.display="none");
-  imgs[i].style.display="block";
-  i=(i+1)%imgs.length;
-}
-show(); setInterval(show,2500);
+/* 🔁 PRIORITY SLIDESHOW LOGIC */
+const priorityImgs=document.querySelectorAll("#priority-images img");
+const slideshows=document.querySelectorAll(".corner-slideshow");
 
-/* CELEBRATE */
+slideshows.forEach((slideshow, index)=>{
+  priorityImgs.forEach(img=>{
+    const clone=img.cloneNode();
+    clone.style.display="none";
+    slideshow.appendChild(clone);
+  });
+
+  const imgs=slideshow.querySelectorAll("img");
+  let i=index % imgs.length;
+
+  function play(){
+    imgs.forEach(img=>img.style.display="none");
+    imgs[i].style.display="block";
+    i=(i+1)%imgs.length;
+  }
+
+  play();
+  setInterval(play,2500);
+});
+
+/* 🎉 CELEBRATE */
 function celebrate(){
   document.getElementById("cake").classList.add("blow");
   document.getElementById("song").play();
@@ -172,36 +211,6 @@ function celebrate(){
     c.style.animationDuration=(Math.random()*2+2)+"s";
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),4000);
-  }
-
-  for(let i=0;i<70;i++){
-    let s=document.createElement("div");
-    s.className="sparkle";
-    s.innerText=["✨","🎉","🎊","🥳","💥"][Math.floor(Math.random()*5)];
-    s.style.left=Math.random()*100+"vw";
-    s.style.top=Math.random()*100+"vh";
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),1200);
-  }
-
-  for(let i=0;i<25;i++){
-    let b=document.createElement("div");
-    b.className="balloon";
-    b.innerText="🎈";
-    b.style.left=Math.random()*100+"vw";
-    b.style.bottom="-40px";
-    document.body.appendChild(b);
-    setTimeout(()=>b.remove(),6000);
-  }
-
-  for(let i=0;i<18;i++){
-    let f=document.createElement("div");
-    f.className="firework";
-    f.innerText="🎆";
-    f.style.left=Math.random()*100+"vw";
-    f.style.top=Math.random()*100+"vh";
-    document.body.appendChild(f);
-    setTimeout(()=>f.remove(),1400);
   }
 }
 </script>
