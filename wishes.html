@@ -68,12 +68,12 @@ button{
 }
 
 /* 🎞️ CORNER SLIDESHOWS */
-.corner-slideshow{
+.slideshow{
   position:fixed;
   width:180px;
-  z-index:10;
+  z-index:999;
 }
-.corner-slideshow img{
+.slideshow img{
   width:100%;
   display:none;
   border-radius:18px;
@@ -86,36 +86,22 @@ button{
 .bottom-left{bottom:20px;left:20px}
 .bottom-right{bottom:20px;right:20px}
 
-/* effects */
-.confetti,.sparkle,.balloon,.firework{
+/* confetti */
+.confetti{
   position:fixed;
-  z-index:999;
+  width:10px;
+  height:10px;
+  z-index:9999;
   pointer-events:none;
+  animation:fall linear forwards;
 }
-.confetti{width:10px;height:10px;animation:fall linear forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
-
-.sparkle{font-size:26px;animation:spark 1.2s forwards}
-@keyframes spark{to{transform:scale(2.5);opacity:0}}
-
-.balloon{font-size:40px;animation:float 6s linear forwards}
-@keyframes float{to{transform:translateY(-120vh);opacity:0}}
-
-.firework{font-size:40px;animation:boom 1.4s forwards}
-@keyframes boom{to{transform:scale(3);opacity:0}}
-
-.share a{
-  background:#25D366;
-  color:white;
-  padding:14px 30px;
-  border-radius:30px;
-  text-decoration:none;
-  font-weight:bold;
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(720deg);opacity:0}
 }
 
 /* mobile */
 @media(max-width:768px){
-  .corner-slideshow{width:120px;opacity:.9}
+  .slideshow{width:120px;opacity:.9}
 }
 </style>
 </head>
@@ -126,24 +112,34 @@ button{
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- 🔥 PRIORITY IMAGE LIST (ORDER = PRIORITY) -->
-<div id="priority-images" style="display:none">
-  <img src="Pic01.png">
-  <img src="Pic02.png">
-  <img src="Pic03.png">
-  <img src="Pic04.png">
-  <!-- <img src="Pic05.png">
-  <img src="Pic06.png">
-  <img src="Pic07.png">
-  <img src="Pic08.png"> -->
-  <!-- add unlimited images here -->
+<!-- 🎞️ SLIDESHOWS (SIMPLE & WORKING) -->
+<div class="slideshow top-left">
+  <img src="Pic1.png">
+  <img src="Pic2.png">
+  <img src="Pic3.png">
+  <img src="Pic4.png">
 </div>
 
-<!-- CORNERS -->
-<div class="corner-slideshow top-left"></div>
-<div class="corner-slideshow top-right"></div>
-<div class="corner-slideshow bottom-left"></div>
-<div class="corner-slideshow bottom-right"></div>
+<div class="slideshow top-right">
+  <img src="Pic1.png">
+  <img src="Pic2.png">
+  <img src="Pic3.png">
+  <img src="Pic4.png">
+</div>
+
+<div class="slideshow bottom-left">
+  <img src="Pic1.png">
+  <img src="Pic2.png">
+  <img src="Pic3.png">
+  <img src="Pic4.png">
+</div>
+
+<div class="slideshow bottom-right">
+  <img src="Pic1.png">
+  <img src="Pic2.png">
+  <img src="Pic3.png">
+  <img src="Pic4.png">
+</div>
 
 <div class="container">
   <h1>🎂 Happy Birthday <span id="name"></span> 🎂</h1>
@@ -164,67 +160,47 @@ button{
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-    
-      /* NAME */
-      const params = new URLSearchParams(window.location.search);
-      const name = params.get("name") || "You";
-      document.getElementById("name").innerText = name;
-    
-      /* WHATSAPP */
-      document.getElementById("whatsapp").href =
-      `https://wa.me/?text=🎉🎂%20Happy%20Birthday%20${encodeURIComponent(name)}%20🎉🎂%0AFrom%20Venkey%20💛`;
-    
-      /* 🔁 PRIORITY SLIDESHOW LOGIC (FIXED) */
-      const priorityImgs = document.querySelectorAll("#priority-images img");
-      const slideshows = document.querySelectorAll(".corner-slideshow");
-    
-      if (priorityImgs.length === 0) {
-        console.error("No priority images found");
-        return;
-      }
-    
-      slideshows.forEach((slideshow, index) => {
-    
-        // clone priority images into each corner
-        priorityImgs.forEach(img => {
-          const clone = img.cloneNode(true);
-          clone.style.display = "none";
-          slideshow.appendChild(clone);
-        });
-    
-        const imgs = slideshow.querySelectorAll("img");
-        let i = index % imgs.length;
-    
-        function play(){
-          imgs.forEach(img => img.style.display = "none");
-          imgs[i].style.display = "block";
-          i = (i + 1) % imgs.length;
-        }
-    
-        play();
-        setInterval(play, 2500);
-      });
-    
-    });
-    
-    /* 🎉 CELEBRATE */
-    function celebrate(){
-      document.getElementById("cake").classList.add("blow");
-      document.getElementById("song").play();
-      document.getElementById("messageBox").style.display="block";
-    
-      for(let i=0;i<160;i++){
-        let c=document.createElement("div");
-        c.className="confetti";
-        c.style.left=Math.random()*100+"vw";
-        c.style.backgroundColor=["#ffd600","#00e5ff","#ff4081","#69f0ae"][Math.floor(Math.random()*4)];
-        c.style.animationDuration=(Math.random()*2+2)+"s";
-        document.body.appendChild(c);
-        setTimeout(()=>c.remove(),4000);
-      }
-    }
+/* NAME */
+const params = new URLSearchParams(window.location.search);
+const name = params.get("name") || "You";
+document.getElementById("name").innerText = name;
+
+/* WHATSAPP */
+document.getElementById("whatsapp").href =
+`https://wa.me/?text=🎉🎂%20Happy%20Birthday%20${encodeURIComponent(name)}%20🎉🎂%0AFrom%20Venkey%20💛`;
+
+/* SLIDESHOW LOGIC (OLD + STABLE) */
+document.querySelectorAll(".slideshow").forEach(slideshow=>{
+  let i=0;
+  const imgs=slideshow.querySelectorAll("img");
+
+  function show(){
+    imgs.forEach(img=>img.style.display="none");
+    imgs[i].style.display="block";
+    i=(i+1)%imgs.length;
+  }
+
+  show();
+  setInterval(show,2500);
+});
+
+/* 🎉 CELEBRATE */
+function celebrate(){
+  document.getElementById("cake").classList.add("blow");
+  document.getElementById("song").play();
+  document.getElementById("messageBox").style.display="block";
+
+  for(let i=0;i<150;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.backgroundColor=["#ffd600","#00e5ff","#ff4081","#69f0ae"][Math.floor(Math.random()*4)];
+    c.style.animationDuration=(Math.random()*2+2)+"s";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
 </script>
-    
+
 </body>
 </html>
