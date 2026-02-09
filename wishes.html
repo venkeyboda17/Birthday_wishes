@@ -164,56 +164,67 @@ button{
 </div>
 
 <script>
-/* NAME */
-const params=new URLSearchParams(window.location.search);
-const name=params.get("name")||"You";
-document.getElementById("name").innerText=name;
-
-/* WHATSAPP */
-document.getElementById("whatsapp").href=
-`https://wa.me/?text=🎉🎂%20Happy%20Birthday%20${encodeURIComponent(name)}%20🎉🎂%0AFrom%20Venkey%20💛`;
-
-/* 🔁 PRIORITY SLIDESHOW LOGIC */
-const priorityImgs=document.querySelectorAll("#priority-images img");
-const slideshows=document.querySelectorAll(".corner-slideshow");
-
-slideshows.forEach((slideshow, index)=>{
-  priorityImgs.forEach(img=>{
-    const clone=img.cloneNode();
-    clone.style.display="none";
-    slideshow.appendChild(clone);
-  });
-
-  const imgs=slideshow.querySelectorAll("img");
-  let i=index % imgs.length;
-
-  function play(){
-    imgs.forEach(img=>img.style.display="none");
-    imgs[i].style.display="block";
-    i=(i+1)%imgs.length;
-  }
-
-  play();
-  setInterval(play,2500);
-});
-
-/* 🎉 CELEBRATE */
-function celebrate(){
-  document.getElementById("cake").classList.add("blow");
-  document.getElementById("song").play();
-  document.getElementById("messageBox").style.display="block";
-
-  for(let i=0;i<160;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.backgroundColor=["#ffd600","#00e5ff","#ff4081","#69f0ae"][Math.floor(Math.random()*4)];
-    c.style.animationDuration=(Math.random()*2+2)+"s";
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),4000);
-  }
-}
+    document.addEventListener("DOMContentLoaded", () => {
+    
+      /* NAME */
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get("name") || "You";
+      document.getElementById("name").innerText = name;
+    
+      /* WHATSAPP */
+      document.getElementById("whatsapp").href =
+      `https://wa.me/?text=🎉🎂%20Happy%20Birthday%20${encodeURIComponent(name)}%20🎉🎂%0AFrom%20Venkey%20💛`;
+    
+      /* 🔁 PRIORITY SLIDESHOW LOGIC (FIXED) */
+      const priorityImgs = document.querySelectorAll("#priority-images img");
+      const slideshows = document.querySelectorAll(".corner-slideshow");
+    
+      if (priorityImgs.length === 0) {
+        console.error("No priority images found");
+        return;
+      }
+    
+      slideshows.forEach((slideshow, index) => {
+    
+        // clone priority images into each corner
+        priorityImgs.forEach(img => {
+          const clone = img.cloneNode(true);
+          clone.style.display = "none";
+          slideshow.appendChild(clone);
+        });
+    
+        const imgs = slideshow.querySelectorAll("img");
+        let i = index % imgs.length;
+    
+        function play(){
+          imgs.forEach(img => img.style.display = "none");
+          imgs[i].style.display = "block";
+          i = (i + 1) % imgs.length;
+        }
+    
+        play();
+        setInterval(play, 2500);
+      });
+    
+    });
+    
+    /* 🎉 CELEBRATE */
+    function celebrate(){
+      document.getElementById("cake").classList.add("blow");
+      document.getElementById("song").play();
+      document.getElementById("messageBox").style.display="block";
+    
+      for(let i=0;i<160;i++){
+        let c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.backgroundColor=["#ffd600","#00e5ff","#ff4081","#69f0ae"][Math.floor(Math.random()*4)];
+        c.style.animationDuration=(Math.random()*2+2)+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),4000);
+      }
+    }
 </script>
-
+    
 </body>
 </html>
