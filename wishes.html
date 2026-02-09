@@ -109,6 +109,32 @@ button:hover{transform:scale(1.08)}
   text-decoration:none;
   font-weight:bold;
 }
+
+/* MESSAGE BOX (hidden initially) */
+.message-box {
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 25px 30px;
+  border: 3px solid #ffd600;
+  border-radius: 20px;
+  font-size: 20px;
+  line-height: 1.6;
+  background: rgba(255, 255, 255, 0.08);
+  display: none;
+  animation: popIn 0.9s ease forwards;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 </style>
 </head>
 
