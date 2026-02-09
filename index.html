@@ -77,9 +77,15 @@ body{
 .title{
   font-family:'Pacifico',cursive;
   font-size:38px;
-  margin-bottom:25px;
-  padding:14px 30px;
+
+  /* spacing */
+  margin:0 auto 25px;
+  padding:14px 28px;
+
+  /* shape */
   border-radius:50px;
+
+  /* gradient */
   background:linear-gradient(
     90deg,
     #ff004c,
@@ -91,14 +97,18 @@ body{
   );
   background-size:300% 300%;
   animation:gradientMove 6s ease infinite;
+
   color:#fff;
   text-shadow:0 4px 12px rgba(0,0,0,0.6);
 
-  white-space: nowrap;      /* never go to 2 lines */
-  display: inline-block;    /* width fits text */
-  /* text-align: center; */
-  max-width: 100%;
+  /* 🔒 IMPORTANT FIXES */
+  display:inline-block;       /* fit to text */
+  max-width:100%;             /* never exceed card */
+  box-sizing:border-box;
+  white-space:nowrap;         /* force single line */
+  overflow:hidden;            /* prevent spill */
 }
+
 @media (max-width:600px){
   .title{
     font-size:26px;
