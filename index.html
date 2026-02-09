@@ -5,7 +5,8 @@
 <title>Birthday Wishes 🎉</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"> -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -89,6 +90,46 @@ h2 {
   margin-bottom: 20px;
 }
 
+.title {
+  font-family: 'Pacifico', cursive;
+  font-size: 38px;
+  padding: 14px 30px;
+  margin-bottom: 25px;
+  border-radius: 50px;
+
+  /* COLORFUL BACKGROUND */
+  background: linear-gradient(
+    90deg,
+    #ff004c,
+    #ff9800,
+    #ffee00,
+    #00ffcc,
+    #4facfe,
+    #a855f7
+  );
+  background-size: 300% 300%;
+  animation: titleMove 6s ease infinite;
+
+  color: white;
+  text-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+@keyframes titleMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Mobile friendly */
+@media (max-width: 600px) {
+  .title {
+    font-size: 26px;
+    padding: 12px 20px;
+  }
+}
+
+
 input{
   padding:14px;
   font-size:18px;
@@ -129,7 +170,9 @@ button{
 <div class="watermark">VENKEY BODA</div>
 
 <div class="card">
-  <h1>🎂 Birthday Surprise 🎂</h1>
+  <!-- <h1>🎂 Birthday Surprise 🎂</h1> -->
+  <h1 class="title">🎂 Birthday Surprise 🎂</h1>
+
   <p>Enter name to continue</p>
 
   <input type="text" id="name" placeholder="Enter name">
@@ -140,20 +183,25 @@ button{
 <script>
     function goNext() {
       const name = document.getElementById("name").value.trim();
+    
       if (!name) {
         alert("Please enter your name 😊");
         return;
       }
-
+    
       const music = document.getElementById("bgMusic");
-      music.play().finally(() => {
-        setTimeout(() => {
-          window.location.href =
-            "wishes.html?name=" + encodeURIComponent(name);
-        }, 300);
-      });
-    }
+    
+      if (music) {
+        music.play().catch(() => {});
+      }
+    
+      setTimeout(() => {
+        window.location.href =
+          "wishes.html?name=" + encodeURIComponent(name);
+      }, 300);
+}
 </script>
+    
 
 </body>
 </html>
