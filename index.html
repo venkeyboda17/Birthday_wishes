@@ -22,7 +22,7 @@ body {
 
 /* Big Center Watermark */
 .watermark {
-  position: absolute;
+  /* position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-10deg);
@@ -34,6 +34,45 @@ body {
   pointer-events: none;
   z-index: 1;
   white-space: nowrap;
+} */
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-10deg);
+  font-family: 'Poppins', sans-serif;
+  font-size: 100px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+
+  /* COLORFUL TEXT */
+  background: linear-gradient(
+    90deg,
+    #ff004c,
+    #ff9800,
+    #ffee00,
+    #00ffcc,
+    #4facfe,
+    #a855f7
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* GLOW EFFECT */
+  filter: drop-shadow(0 0 25px rgba(255,255,255,0.25));
+
+  animation: gradientMove 6s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .card{
