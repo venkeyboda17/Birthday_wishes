@@ -107,7 +107,7 @@ button{
 </head>
 
 <body>
-
+<!-- MUSIC (mobile autoplay safe) -->
 <audio id="song" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
@@ -144,9 +144,11 @@ const params=new URLSearchParams(window.location.search);
 const name=params.get("name")||"You";
 document.getElementById("name").innerText=name;
 
+/* WHATSAPP */
 document.getElementById("whatsapp").href=
 `https://wa.me/?text=🎉🎂%20Happy%20Birthday%20${encodeURIComponent(name)}%20🎉🎂%0AFrom%20Venkey%20💛`;
 
+/* SLIDESHOW */
 let i=0;
 const imgs=document.querySelectorAll(".slideshow img");
 function show(){
