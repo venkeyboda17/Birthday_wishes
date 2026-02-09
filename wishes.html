@@ -17,7 +17,39 @@ body{
   overflow-x:hidden;
 }
 
-h1{margin-top:35px;font-size:42px}
+/* 🎉 DECORATIVE BANNERS */
+.banner-top{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:120px;
+  background:url("https://i.imgur.com/7b1bH6b.png") repeat-x;
+  background-size:contain;
+  z-index:0;
+}
+
+.banner-left,.banner-right{
+  position:fixed;
+  top:120px;
+  width:120px;
+  height:100%;
+  background:url("https://i.imgur.com/3Y7w6Yx.png") repeat-y;
+  background-size:contain;
+  z-index:0;
+}
+
+.banner-left{left:0}
+.banner-right{right:0;transform:scaleX(-1)}
+
+.container{
+  position:relative;
+  z-index:2;
+  padding:140px 20px 40px;
+}
+
+/* CONTENT */
+h1{font-size:42px;margin-bottom:10px}
 .subtitle{font-size:18px;margin-bottom:25px}
 
 .cake{
@@ -40,14 +72,33 @@ button{
 button:hover{transform:scale(1.08)}
 
 .slideshow{
-  width:240px;
-  margin:45px auto;
+  width:260px;
+  margin:40px auto;
 }
 .slideshow img{
   width:100%;
   border-radius:20px;
   box-shadow:0 15px 40px rgba(0,0,0,.4);
   display:none;
+}
+
+/* MESSAGE BOX */
+.message-box{
+  max-width:760px;
+  margin:35px auto;
+  padding:25px;
+  border:3px solid #ffd600;
+  border-radius:20px;
+  font-size:20px;
+  background:rgba(255,255,255,.08);
+  display:none;
+  animation:popIn .9s ease forwards;
+}
+.signature{margin-top:18px;font-size:18px;color:#ffd600}
+
+@keyframes popIn{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 /* EFFECTS */
@@ -57,62 +108,19 @@ button:hover{transform:scale(1.08)}
   pointer-events:none;
 }
 
-.confetti{
-  width:10px;height:10px;
-  animation:fall linear forwards;
-}
-@keyframes fall{
-  to{transform:translateY(110vh) rotate(720deg);opacity:0}
-}
+.confetti{width:10px;height:10px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
 
-.sparkle{
-  font-size:26px;
-  animation:spark 1.2s ease-out forwards;
-}
-@keyframes spark{
-  to{transform:scale(2.5);opacity:0}
-}
+.sparkle{font-size:26px;animation:spark 1.2s forwards}
+@keyframes spark{to{transform:scale(2.5);opacity:0}}
 
-.balloon{
-  font-size:40px;
-  animation:float 6s linear forwards;
-}
-@keyframes float{
-  to{transform:translateY(-120vh);opacity:0}
-}
+.balloon{font-size:40px;animation:float 6s linear forwards}
+@keyframes float{to{transform:translateY(-120vh);opacity:0}}
 
-.firework{
-  font-size:40px;
-  animation:boom 1.4s ease-out forwards;
-}
-@keyframes boom{
-  to{transform:scale(3);opacity:0}
-}
+.firework{font-size:40px;animation:boom 1.4s forwards}
+@keyframes boom{to{transform:scale(3);opacity:0}}
 
-/* MESSAGE BOX (HIDDEN INITIALLY) */
-.message-box {
-  max-width: 760px;
-  margin: 40px auto;
-  padding: 25px 30px;
-  border: 3px solid #ffd600;
-  border-radius: 20px;
-  font-size: 20px;
-  line-height: 1.6;
-  background: rgba(255, 255, 255, 0.08);
-  display: none;
-  animation: popIn 0.9s ease forwards;
-}
-
-@keyframes popIn {
-  from { transform: scale(0.7); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
-
-.signature{margin-top:20px;font-size:18px;color:#ffd600}
-
-.share{
-  margin:30px 0;
-}
+.share{margin:30px}
 .share a{
   background:#25D366;
   color:white;
@@ -126,10 +134,17 @@ button:hover{transform:scale(1.08)}
 
 <body>
 
-<!-- MUSIC -->
-<audio autoplay loop>
+<!-- PERMANENT BANNERS -->
+<div class="banner-top"></div>
+<div class="banner-left"></div>
+<div class="banner-right"></div>
+
+<!-- MUSIC (mobile autoplay safe) -->
+<audio id="song" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
+
+<div class="container">
 
 <h1>🎂 Happy Birthday <span id="name"></span> 🎂</h1>
 <div class="subtitle">May your life always be filled with happiness and smiles 💛</div>
@@ -138,14 +153,12 @@ button:hover{transform:scale(1.08)}
 
 <button onclick="celebrate()">🕯 Blow Candle</button>
 
-<!-- MESSAGE (SHOWS ONLY AFTER CLICK) -->
 <div class="message-box" id="messageBox">
-✨ You are truly special and bring joy to everyone around you.<br>
+✨ You are truly special and bring joy to everyone around you.  
 May all your dreams come true 🎉🎈🎁
 <div class="signature">— With love, <b>Venkey 💛</b></div>
 </div>
 
-<!-- SLIDESHOW -->
 <div class="slideshow">
   <img src="Pic1.png">
   <img src="Pic2.png">
@@ -155,6 +168,8 @@ May all your dreams come true 🎉🎈🎁
 
 <div class="share">
   <a id="whatsapp" target="_blank">📲 Share on WhatsApp</a>
+</div>
+
 </div>
 
 <script>
@@ -177,12 +192,14 @@ function show(){
 }
 show(); setInterval(show,2500);
 
-/* CELEBRATION */
+/* CELEBRATE */
 function celebrate(){
   document.getElementById("cake").classList.add("blow");
+  document.getElementById("song").play();
+  document.getElementById("messageBox").style.display="block";
 
-  for(let i=0;i<150;i++){
-    const c=document.createElement("div");
+  for(let i=0;i<160;i++){
+    let c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
     c.style.backgroundColor=["#ffd600","#00e5ff","#ff4081","#69f0ae"][Math.floor(Math.random()*4)];
@@ -191,10 +208,10 @@ function celebrate(){
     setTimeout(()=>c.remove(),4000);
   }
 
-  for(let i=0;i<60;i++){
-    const s=document.createElement("div");
+  for(let i=0;i<70;i++){
+    let s=document.createElement("div");
     s.className="sparkle";
-    s.innerText=["✨","🎉","🎈","🎊","💥","🥳"][Math.floor(Math.random()*6)];
+    s.innerText=["✨","🎉","🎊","🥳","💥"][Math.floor(Math.random()*5)];
     s.style.left=Math.random()*100+"vw";
     s.style.top=Math.random()*100+"vh";
     document.body.appendChild(s);
@@ -202,7 +219,7 @@ function celebrate(){
   }
 
   for(let i=0;i<25;i++){
-    const b=document.createElement("div");
+    let b=document.createElement("div");
     b.className="balloon";
     b.innerText="🎈";
     b.style.left=Math.random()*100+"vw";
@@ -212,7 +229,7 @@ function celebrate(){
   }
 
   for(let i=0;i<18;i++){
-    const f=document.createElement("div");
+    let f=document.createElement("div");
     f.className="firework";
     f.innerText="🎆";
     f.style.left=Math.random()*100+"vw";
@@ -220,9 +237,6 @@ function celebrate(){
     document.body.appendChild(f);
     setTimeout(()=>f.remove(),1400);
   }
-
-  // SHOW MESSAGE
-  document.getElementById("messageBox").style.display="block";
 }
 </script>
 
