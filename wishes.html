@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Happy Birthday 🎂</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      text-align: center;
+      font-family: Arial;
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2.8rem;
+    }
+
+    p {
+      font-size: 1.4rem;
+      margin: 10px 20px;
+    }
+
+    #countdown {
+      font-size: 2rem;
+      margin-top: 20px;
+    }
+
+    .cake {
+      font-size: 90px;
+      margin: 20px;
+      display: none;
+    }
+
+    button {
+      padding: 14px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background: gold;
+      cursor: pointer;
+      display: none;
+    }
+
+    #secret {
+      display: none;
+      margin: 30px 20px;
+      font-size: 1.5rem;
+      color: #fffacd;
+    }
+
+    .slideshow {
+      width: 90%;
+      max-width: 350px;
+      margin: 25px auto;
+    }
+
+    .slideshow img {
+      width: 100%;
+      border-radius: 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<h1 id="title">🎂 Happy Birthday 🎂</h1>
+
+<p>May your life always be filled with joy, love, and good health 💛</p>
+
+<div id="countdown">Surprise in 5...</div>
+
+<div class="cake" id="cake">🕯️🎂🕯️</div>
+
+<button id="blowBtn" onclick="blowCandle()">🕯️ Blow Candle</button>
+
+<div id="secret">
+  💖 You are someone who spreads happiness wherever you go.  
+  May all your dreams come true.  
+  <br><br>
+  — With love, <b>Venkey</b> 💛
+</div>
+
+<div class="slideshow">
+  <img src="Pic1.png">
+  <img src="Pic2.png">
+  <img src="Pic3.png">
+  <img src="Pic4.png">
+</div>
+
+<script>
+  /* Get Name */
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("name") || "Vadhina";
+  document.getElementById("title").innerText =
+    "🎂 Happy Birthday " + name + " 🎂";
+
+  /* Countdown */
+  let count = 5;
+  const timer = setInterval(() => {
+    document.getElementById("countdown").innerText =
+      "Surprise in " + count + "...";
+    count--;
+    if (count < 0) {
+      clearInterval(timer);
+      document.getElementById("countdown").style.display = "none";
+      document.getElementById("cake").style.display = "block";
+      document.getElementById("blowBtn").style.display = "inline-block";
+      startConfetti();
+    }
+  }, 1000);
+
+  /* Confetti */
+  function startConfetti() {
+    for (let i = 0; i < 120; i++) {
+      const c = document.createElement("div");
+      c.style.position = "absolute";
+      c.style.width = "10px";
+      c.style.height = "10px";
+      c.style.background =
+        `hsl(${Math.random() * 360},100%,50%)`;
+      c.style.top = "-10px";
+      c.style.left = Math.random() * window.innerWidth + "px";
+      c.style.animation = "fall 3s linear";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 3000);
+    }
+  }
+
+  function blowCandle() {
+    document.getElementById("cake").innerHTML = "🎂";
+    document.getElementById("secret").style.display = "block";
+    startConfetti();
+  }
+
+  /* Slideshow */
+  const slides = document.querySelectorAll(".slideshow img");
+  let index = 0;
+  slides[0].style.display = "block";
+  setInterval(() => {
+    slides[index].style.display = "none";
+    index = (index + 1) % slides.length;
+    slides[index].style.display = "block";
+  }, 2500);
+</script>
+
+<style>
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+</style>
+
+</body>
+</html>
