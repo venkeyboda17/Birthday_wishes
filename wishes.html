@@ -37,17 +37,7 @@ button{
   cursor:pointer;
   box-shadow:0 10px 25px rgba(0,0,0,.3);
 }
-
 button:hover{transform:scale(1.08)}
-
-.message{
-  max-width:720px;
-  margin:35px auto;
-  font-size:20px;
-  line-height:1.6;
-}
-
-.signature{margin-top:25px;font-size:18px}
 
 .slideshow{
   width:240px;
@@ -60,6 +50,7 @@ button:hover{transform:scale(1.08)}
   display:none;
 }
 
+/* EFFECTS */
 .confetti,.sparkle,.balloon,.firework{
   position:fixed;
   z-index:999;
@@ -98,19 +89,7 @@ button:hover{transform:scale(1.08)}
   to{transform:scale(3);opacity:0}
 }
 
-.share{
-  margin:30px 0;
-}
-.share a{
-  background:#25D366;
-  color:white;
-  padding:14px 30px;
-  border-radius:30px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-/* MESSAGE BOX (hidden initially) */
+/* MESSAGE BOX (HIDDEN INITIALLY) */
 .message-box {
   max-width: 760px;
   margin: 40px auto;
@@ -125,16 +104,23 @@ button:hover{transform:scale(1.08)}
 }
 
 @keyframes popIn {
-  0% {
-    transform: scale(0.7);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
 }
 
+.signature{margin-top:20px;font-size:18px;color:#ffd600}
+
+.share{
+  margin:30px 0;
+}
+.share a{
+  background:#25D366;
+  color:white;
+  padding:14px 30px;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:bold;
+}
 </style>
 </head>
 
@@ -152,13 +138,14 @@ button:hover{transform:scale(1.08)}
 
 <button onclick="celebrate()">🕯 Blow Candle</button>
 
-<div class="message">
-✨ You are truly special and bring joy to everyone around you.  
+<!-- MESSAGE (SHOWS ONLY AFTER CLICK) -->
+<div class="message-box" id="messageBox">
+✨ You are truly special and bring joy to everyone around you.<br>
 May all your dreams come true 🎉🎈🎁
+<div class="signature">— With love, <b>Venkey 💛</b></div>
 </div>
 
-<div class="signature">— With love, <b>Venkey 💛</b></div>
-
+<!-- SLIDESHOW -->
 <div class="slideshow">
   <img src="Pic1.png">
   <img src="Pic2.png">
@@ -233,9 +220,9 @@ function celebrate(){
     document.body.appendChild(f);
     setTimeout(()=>f.remove(),1400);
   }
-  // SHOW MESSAGE AFTER BLOW
-  document.getElementById("messageBox").style.display = "block";
 
+  // SHOW MESSAGE
+  document.getElementById("messageBox").style.display="block";
 }
 </script>
 
