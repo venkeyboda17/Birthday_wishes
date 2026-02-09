@@ -147,6 +147,37 @@ button{
 @media(max-width:768px){
   .slideshow{width:120px;opacity:.9}
 }
+
+/* 📲 WHATSAPP BUTTON */
+.whatsapp-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+
+  background:#25D366;            /* WhatsApp green */
+  color:white;
+  padding:14px 32px;
+  border-radius:50px;
+
+  font-size:18px;
+  font-weight:700;
+  text-decoration:none;
+
+  border:3px solid #1ebe5d;
+  box-shadow:0 8px 20px rgba(0,0,0,0.35);
+
+  transition:all .25s ease;
+}
+
+.whatsapp-btn:hover{
+  transform:scale(1.06);
+  background:#1ebe5d;
+}
+
+.wa-icon{
+  font-size:22px;
+  line-height:1;
+}
 </style>
 </head>
 
@@ -199,10 +230,18 @@ button{
     <div class="signature">— With love, <b>Venkey 💛</b></div>
   </div>
 
-  <div class="share">
+  <!-- <div class="share">
     <a id="whatsapp" target="_blank">📲 Share on WhatsApp</a>
   </div>
+</div> -->
+
+<div class="share">
+    <a id="whatsapp" class="whatsapp-btn" target="_blank">
+      <span class="wa-icon">🟢</span>
+      Share on WhatsApp
+    </a>
 </div>
+  
 
 <script>
 /* NAME */
@@ -230,12 +269,14 @@ document.querySelectorAll(".slideshow").forEach((slideshow, index) => {
 });
 
 /* 🎉 CELEBRATION (ONE TIME) */
-let celebrated = false;
+// let celebrated = false;
 
 function celebrate(){
-  if(celebrated) return;
-  celebrated = true;
-
+//   const cake = document.getElementById("cake");
+//   cake.classList.remove("blow");
+//   void cake.offsetWidth; // force reflow
+//   cake.classList.add("blow");    
+  
   document.getElementById("cake").classList.add("blow");
   document.getElementById("song").play();
   document.getElementById("messageBox").style.display="block";
