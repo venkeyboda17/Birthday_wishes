@@ -31,13 +31,19 @@ body{
 h1{font-size:42px;margin-bottom:10px}
 .subtitle{font-size:18px;margin-bottom:25px}
 
+/* CAKE */
 .cake{
   font-size:90px;
   margin:20px 0;
+  cursor:pointer;
   transition:.4s;
 }
-.cake.blow{transform:scale(.9) rotate(-8deg);filter:brightness(.7)}
+.cake.blow{
+  transform:scale(.9) rotate(-8deg);
+  filter:brightness(.7);
+}
 
+/* BUTTON */
 button{
   padding:16px 42px;
   font-size:20px;
@@ -49,6 +55,7 @@ button{
   box-shadow:0 10px 25px rgba(0,0,0,.3);
 }
 
+/* MESSAGE */
 .message-box{
   max-width:760px;
   margin:35px auto;
@@ -79,14 +86,12 @@ button{
   border-radius:18px;
   box-shadow:0 15px 35px rgba(0,0,0,.45);
 }
-
-/* positions */
 .top-left{top:20px;left:20px}
 .top-right{top:20px;right:20px}
 .bottom-left{bottom:20px;left:20px}
 .bottom-right{bottom:20px;right:20px}
 
-/* confetti */
+/* 🎊 CONFETTI */
 .confetti{
   position:fixed;
   width:10px;
@@ -99,7 +104,46 @@ button{
   to{transform:translateY(110vh) rotate(720deg);opacity:0}
 }
 
-/* mobile */
+/* ✨ SPARKLES */
+.sparkle{
+  position:fixed;
+  font-size:22px;
+  z-index:9999;
+  pointer-events:none;
+  animation:sparklePop 1.2s ease-out forwards;
+}
+@keyframes sparklePop{
+  from{transform:scale(0);opacity:0}
+  to{transform:scale(1.6);opacity:0}
+}
+
+/* 🎈 BALLOONS */
+.balloon{
+  position:fixed;
+  font-size:36px;
+  z-index:9998;
+  pointer-events:none;
+  animation:floatUp 6s linear forwards;
+}
+@keyframes floatUp{
+  from{transform:translateY(0)}
+  to{transform:translateY(-120vh)}
+}
+
+/* 🎆 FIREWORKS */
+.firework{
+  position:fixed;
+  font-size:32px;
+  z-index:9999;
+  pointer-events:none;
+  animation:boom 1.4s ease-out forwards;
+}
+@keyframes boom{
+  from{transform:scale(0);opacity:1}
+  to{transform:scale(2.2);opacity:0}
+}
+
+/* MOBILE */
 @media(max-width:768px){
   .slideshow{width:120px;opacity:.9}
 }
@@ -112,7 +156,7 @@ button{
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- 🎞️ SLIDESHOWS (SIMPLE & WORKING) -->
+<!-- 🎞️ SLIDESHOWS -->
 <div class="slideshow top-left">
   <img src="Pic1.png">
   <img src="Pic2.png">
@@ -145,7 +189,8 @@ button{
   <h1>🎂 Happy Birthday <span id="name"></span> 🎂</h1>
   <div class="subtitle">May your life always be filled with happiness and smiles 💛</div>
 
-  <div class="cake" id="cake">🎂</div>
+  <!-- CLICKABLE CAKE -->
+  <div class="cake" id="cake" onclick="celebrate()">🎂</div>
   <button onclick="celebrate()">🕯 Blow Candle</button>
 
   <div class="message-box" id="messageBox">
@@ -169,27 +214,33 @@ document.getElementById("name").innerText = name;
 document.getElementById("whatsapp").href =
 `https://wa.me/?text=🎉🎂%20Happy%20Birthday%20${encodeURIComponent(name)}%20🎉🎂%0AFrom%20Venkey%20💛`;
 
-/* 🎞️ SLIDESHOW LOGIC (DIFFERENT START IMAGE PER CORNER) */
+/* 🎞️ SLIDESHOW */
 document.querySelectorAll(".slideshow").forEach((slideshow, index) => {
-  let i = index; // 👈 key change
+  let i = index;
   const imgs = slideshow.querySelectorAll("img");
 
   function show(){
-    imgs.forEach(img => img.style.display = "none");
-    imgs[i % imgs.length].style.display = "block";
+    imgs.forEach(img => img.style.display="none");
+    imgs[i % imgs.length].style.display="block";
     i++;
   }
 
   show();
-  setInterval(show, 2500);
+  setInterval(show,2500);
 });
 
-/* 🎉 CELEBRATE */
+/* 🎉 CELEBRATION (ONE TIME) */
+let celebrated = false;
+
 function celebrate(){
+  if(celebrated) return;
+  celebrated = true;
+
   document.getElementById("cake").classList.add("blow");
   document.getElementById("song").play();
   document.getElementById("messageBox").style.display="block";
 
+  /* confetti */
   for(let i=0;i<150;i++){
     const c=document.createElement("div");
     c.className="confetti";
@@ -200,8 +251,9 @@ function celebrate(){
     setTimeout(()=>c.remove(),4000);
   }
 
+  /* sparkles */
   for(let i=0;i<70;i++){
-    let s=document.createElement("div");
+    const s=document.createElement("div");
     s.className="sparkle";
     s.innerText=["✨","🎉","🎊","🥳","💥"][Math.floor(Math.random()*5)];
     s.style.left=Math.random()*100+"vw";
@@ -210,8 +262,9 @@ function celebrate(){
     setTimeout(()=>s.remove(),1200);
   }
 
+  /* balloons */
   for(let i=0;i<25;i++){
-    let b=document.createElement("div");
+    const b=document.createElement("div");
     b.className="balloon";
     b.innerText="🎈";
     b.style.left=Math.random()*100+"vw";
@@ -220,15 +273,16 @@ function celebrate(){
     setTimeout(()=>b.remove(),6000);
   }
 
+  /* fireworks */
   for(let i=0;i<18;i++){
-    let f=document.createElement("div");
+    const f=document.createElement("div");
     f.className="firework";
     f.innerText="🎆";
     f.style.left=Math.random()*100+"vw";
     f.style.top=Math.random()*100+"vh";
     document.body.appendChild(f);
     setTimeout(()=>f.remove(),1400);
-  }  
+  }
 }
 </script>
 

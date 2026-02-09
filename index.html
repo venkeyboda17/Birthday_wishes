@@ -93,6 +93,16 @@ body{
   animation:gradientMove 6s ease infinite;
   color:#fff;
   text-shadow:0 4px 12px rgba(0,0,0,0.6);
+
+  white-space: nowrap;      /* never go to 2 lines */
+  display: inline-block;    /* width fits text */
+  text-align: center;
+}
+@media (max-width:600px){
+  .title{
+    font-size:26px;
+    padding:12px 20px;
+  }  
 }
 
 /* TEXT */
