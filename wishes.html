@@ -169,19 +169,19 @@ document.getElementById("name").innerText = name;
 document.getElementById("whatsapp").href =
 `https://wa.me/?text=🎉🎂%20Happy%20Birthday%20${encodeURIComponent(name)}%20🎉🎂%0AFrom%20Venkey%20💛`;
 
-/* SLIDESHOW LOGIC (OLD + STABLE) */
-document.querySelectorAll(".slideshow").forEach(slideshow=>{
-  let i=0;
-  const imgs=slideshow.querySelectorAll("img");
+/* 🎞️ SLIDESHOW LOGIC (DIFFERENT START IMAGE PER CORNER) */
+document.querySelectorAll(".slideshow").forEach((slideshow, index) => {
+  let i = index; // 👈 key change
+  const imgs = slideshow.querySelectorAll("img");
 
   function show(){
-    imgs.forEach(img=>img.style.display="none");
-    imgs[i].style.display="block";
-    i=(i+1)%imgs.length;
+    imgs.forEach(img => img.style.display = "none");
+    imgs[i % imgs.length].style.display = "block";
+    i++;
   }
 
   show();
-  setInterval(show,2500);
+  setInterval(show, 2500);
 });
 
 /* 🎉 CELEBRATE */
