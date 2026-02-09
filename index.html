@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Something Special 💛</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font for Watermark -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -11,16 +15,35 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(to right, #232526, #414345);
-      font-family: Arial;
+      background: radial-gradient(circle, #3a3a3a, #0f0f0f);
+      font-family: Arial, sans-serif;
       position: relative;
+      overflow: hidden;
+    }
+
+    /* Big Center Watermark */
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-10deg);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 80px;
+      color: rgba(255, 255, 255, 0.08);
+      letter-spacing: 6px;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      white-space: nowrap;
     }
 
     .card {
-      background: rgba(0,0,0,0.4);
-      padding: 35px;
-      border-radius: 15px;
+      background: rgba(0,0,0,0.6);
+      padding: 40px;
+      border-radius: 18px;
       text-align: center;
+      z-index: 2;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
     }
 
     h2 {
@@ -33,19 +56,20 @@
       font-size: 18px;
       border-radius: 8px;
       border: none;
-      width: 220px;
+      width: 230px;
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     button {
-      padding: 14px 35px;
+      padding: 15px 40px;
       font-size: 20px;
-      background: #ff9800;
-      color: white;
+      background: linear-gradient(to right, #ff9800, #ffb347);
+      color: black;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
+      font-weight: bold;
       animation: pulse 1.4s infinite;
     }
 
@@ -55,19 +79,16 @@
       100% { transform: scale(1); }
     }
 
-    /* Watermark */
-    .watermark {
-      position: absolute;
-      bottom: 15px;
-      right: 20px;
-      font-size: 14px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 2px;
-      user-select: none;
+    @media (max-width: 600px) {
+      .watermark {
+        font-size: 45px;
+      }
     }
   </style>
 </head>
 <body>
+
+  <div class="watermark">VENKEY BODA</div>
 
   <div class="card">
     <h2>Enter Your Name 💛</h2>
@@ -76,7 +97,10 @@
     <button onclick="goNext()">🎁 Click Here 🎁</button>
   </div>
 
-  <div class="watermark">VENKEY BODA</div>
+  <!-- Music (starts on click) -->
+  <audio id="bgMusic">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     function goNext() {
@@ -85,7 +109,14 @@
         alert("Please enter your name 😊");
         return;
       }
-      window.location.href = "wishes.html?name=" + encodeURIComponent(name);
+
+      const music = document.getElementById("bgMusic");
+      music.play().finally(() => {
+        setTimeout(() => {
+          window.location.href =
+            "wishes.html?name=" + encodeURIComponent(name);
+        }, 300);
+      });
     }
   </script>
 
