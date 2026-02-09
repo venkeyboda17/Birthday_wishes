@@ -156,12 +156,13 @@ function show(){
 }
 show(); setInterval(show,2500);
 
+/* CELEBRATE */
 function celebrate(){
   document.getElementById("cake").classList.add("blow");
   document.getElementById("song").play();
   document.getElementById("messageBox").style.display="block";
 
-  for(let i=0;i<120;i++){
+  for(let i=0;i<160;i++){
     let c=document.createElement("div");
     c.className="confetti";
     c.style.left=Math.random()*100+"vw";
@@ -169,6 +170,36 @@ function celebrate(){
     c.style.animationDuration=(Math.random()*2+2)+"s";
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),4000);
+  }
+
+  for(let i=0;i<70;i++){
+    let s=document.createElement("div");
+    s.className="sparkle";
+    s.innerText=["✨","🎉","🎊","🥳","💥"][Math.floor(Math.random()*5)];
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1200);
+  }
+
+  for(let i=0;i<25;i++){
+    let b=document.createElement("div");
+    b.className="balloon";
+    b.innerText="🎈";
+    b.style.left=Math.random()*100+"vw";
+    b.style.bottom="-40px";
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),6000);
+  }
+
+  for(let i=0;i<18;i++){
+    let f=document.createElement("div");
+    f.className="firework";
+    f.innerText="🎆";
+    f.style.left=Math.random()*100+"vw";
+    f.style.top=Math.random()*100+"vh";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1400);
   }
 }
 </script>
