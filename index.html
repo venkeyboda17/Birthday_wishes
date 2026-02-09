@@ -99,14 +99,21 @@ button{
 </div>
 
 <script>
-function go(){
-  const name=document.getElementById("name").value || "You";
-  if (!name) {
+    function goNext() {
+      const name = document.getElementById("name").value.trim();
+      if (!name) {
         alert("Please enter your name 😊");
         return;
-  }
-  window.location.href="wishes.html?name="+encodeURIComponent(name);
-}
+      }
+
+      const music = document.getElementById("bgMusic");
+      music.play().finally(() => {
+        setTimeout(() => {
+          window.location.href =
+            "wishes.html?name=" + encodeURIComponent(name);
+        }, 300);
+      });
+    }
 </script>
 
 </body>
