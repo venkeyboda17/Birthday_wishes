@@ -27,7 +27,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%) rotate(-10deg);
   font-family: 'Montserrat', sans-serif;
-  font-size: 80px;
+  font-size: 100px;
   color: rgba(255, 255, 255, 0.08);
   letter-spacing: 6px;
   user-select: none;
@@ -101,6 +101,10 @@ button{
 <script>
 function go(){
   const name=document.getElementById("name").value || "You";
+  if (!name) {
+        alert("Please enter your name 😊");
+        return;
+  }
   window.location.href="wishes.html?name="+encodeURIComponent(name);
 }
 </script>
